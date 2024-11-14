@@ -9,9 +9,9 @@ A web-based platform for creating, managing, and sharing obituaries. This platfo
 ## Course Details
 - **Course**: Internet Programming
 - **Assessment**: CAT 2
-- **Student Name**: [Your Name]
-- **Student ID**: [Your ID]
-- **Lecturer**: [Lecturer's Name]
+- **Student Name**: Timothy Morandi
+- **Student ID**: ********
+- **Lecturer**: George Wainaina
 
 ## Features Implemented (As per CAT 2 Requirements)
 

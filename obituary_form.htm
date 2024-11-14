@@ -1,0 +1,93 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obituary Submission Form</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-header">
+            <h1>Submit an Obituary</h1>
+            <p>Please fill in all required fields marked with *</p>
+        </div>
+
+        <form id="obituaryForm" method="POST" action="/submit_obituary" novalidate>
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    placeholder="Enter the full name"
+                    required
+                >
+                <span class="error-message" id="nameError"></span>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="date_of_birth">Date of Birth *</label>
+                    <input 
+                        type="date" 
+                        id="date_of_birth" 
+                        name="date_of_birth"
+                        required
+                    >
+                    <span class="error-message" id="dobError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="date_of_death">Date of Death *</label>
+                    <input 
+                        type="date" 
+                        id="date_of_death" 
+                        name="date_of_death"
+                        required
+                    >
+                    <span class="error-message" id="dodError"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="content">Obituary Content *</label>
+                <textarea 
+                    id="content" 
+                    name="content" 
+                    rows="6" 
+                    placeholder="Enter the obituary content (minimum 50 characters)"
+                    required
+                ></textarea>
+                <span class="error-message" id="contentError"></span>
+                <div class="character-count" id="contentCount">0 characters</div>
+            </div>
+
+            <div class="form-group">
+                <label for="author">Author *</label>
+                <input 
+                    type="text" 
+                    id="author" 
+                    name="author" 
+                    placeholder="Enter the author's name"
+                    required
+                >
+                <span class="error-message" id="authorError"></span>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">Submit Obituary</button>
+                <button type="reset" class="reset-btn">Clear Form</button>
+            </div>
+        </form>
+        <div class="navigation-links">
+            <a href="/view_obituaries" class="nav-link">View All Obituaries</a>
+            <!-- <a href="/submit" class="nav-link">Submit New Obituary</a> -->
+        </div>
+    </div>
+    
+    <script src="./js/form.js"></script>
+</body>
+</html>

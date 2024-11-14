@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Dynamic Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obituaries List | Memorial Platform</title>
+    <meta name="description" content="Browse and share obituaries of loved ones. A place to honor and remember those who have passed.">
+    <meta name="keywords" content="obituaries, memorials, remembrance, death notices, tributes">
+    
+    <!-- Canonical Tag -->
+    <link rel="canonical" href="https://yourwebsite.com/obituaries">
+    
+    <!-- Schema.org markup for search engines -->
+  
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Obituaries List | Memorial Platform">
+    <meta property="og:description" content="Browse and share obituaries of loved ones. A place to honor and remember those who have passed.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourwebsite.com/obituaries">
+    <meta property="og:image" content="https://yourwebsite.com/images/default-memorial.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Obituaries List | Memorial Platform">
+    <meta name="twitter:description" content="Browse and share obituaries of loved ones. A place to honor and remember those who have passed.">
+    <meta name="twitter:image" content="https://yourwebsite.com/images/default-memorial.jpg">
+    
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .obituaries-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .obituaries-table th,
+        .obituaries-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .obituaries-table th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .obituaries-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .pagination {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .pagination button {
+            padding: 8px 15px;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .pagination button:disabled {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+
+        .pagination span {
+            margin: 0 10px;
+        }
+
+        #loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .navigation-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .nav-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .nav-link:hover {
+            background-color: #0056b3;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .view-btn, .share-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .view-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .share-btn {
+            background-color: #17a2b8;
+            color: white;
+        }
+
+        .share-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .share-dialog-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 300px;
+        }
+
+        .share-dialog-content h3 {
+            margin: 0 0 15px 0;
+            text-align: center;
+        }
+
+        .share-dialog-content button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        .share-dialog-content .close-btn {
+            background-color: #6c757d;
+            margin-top: 10px;
+        }
+
+        .facebook-btn { background-color: #3b5998; }
+        .twitter-btn { background-color: #1da1f2; }
+        .linkedin-btn { background-color: #0077b5; }
+        .copy-btn { background-color: #6c757d; }
+
+        @media (max-width: 768px) {
+            .obituaries-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <article itemscope itemtype="http://schema.org/CollectionPage">
+            <h1 itemprop="name">Obituaries List</h1>
+            
+            <div id="loading">Loading obituaries...</div>
+            
+            <div id="obituariesContainer">
+                <table class="obituaries-table" itemscope itemtype="http://schema.org/ItemList">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date of Birth</th>
+                            <th>Date of Death</th>
+                            <th>Content</th>
+                            <th>Author</th>
+                            <th>Submitted On</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="obituariesList">
+                        <!-- Data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="pagination" class="pagination">
+                <!-- Pagination buttons will be inserted here -->
+            </div>
+
+            <div class="navigation-links">
+                <a href="/" class="nav-link">Submit New Obituary</a>
+            </div>
+        </article>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingDiv = document.getElementById('loading');
+            const obituariesList = document.getElementById('obituariesList');
+            const paginationDiv = document.getElementById('pagination');
+            let currentPage = 1;
+
+            async function loadObituaries(page = 1) {
+                try {
+                    loadingDiv.style.display = 'block';
+                    
+                    const response = await fetch(`/api/obituaries?page=${page}`);
+                    const data = await response.json();
+
+                    if (!data.success) {
+                        throw new Error(data.message || 'Error fetching obituaries');
+                    }
+
+                    obituariesList.innerHTML = '';
+
+                    data.data.obituaries.forEach((obituary, index) => {
+                        const row = document.createElement('tr');
+                        row.setAttribute('itemscope', '');
+                        row.setAttribute('itemtype', 'http://schema.org/Article');
+                        row.innerHTML = `
+                            <td itemprop="name">${escapeHtml(obituary.name)}</td>
+                            <td itemprop="dateCreated">${obituary.date_of_birth}</td>
+                            <td itemprop="dateModified">${obituary.date_of_death}</td>
+                            <td itemprop="articleBody">${escapeHtml(obituary.content.substring(0, 100))}...</td>
+                            <td itemprop="author">${escapeHtml(obituary.author)}</td>
+                            <td itemprop="datePublished">${obituary.submission_date}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button onclick="viewObituary('${obituary.id}')" class="view-btn">
+                                        View
+                                    </button>
+                                    <button onclick="shareObituary('${obituary.id}', '${escapeHtml(obituary.name)}')" class="share-btn">
+                                        Share
+                                    </button>
+                                </div>
+                            </td>
+                        `;
+                        obituariesList.appendChild(row);
+                    });
+
+                    updatePagination(data.data.pagination);
+
+                } catch (error) {
+                    console.error('Error:', error);
+                    obituariesList.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="error-message">
+                                Error loading obituaries. Please try again later.
+                            </td>
+                        </tr>
+                    `;
+                } finally {
+                    loadingDiv.style.display = 'none';
+                }
+            }
+
+            function updatePagination(pagination) {
+                const { currentPage, totalPages } = pagination;
+                let paginationHtml = '';
+
+                if (totalPages > 1) {
+                    paginationHtml = `
+                        <button onclick="changePage(1)" ${currentPage === 1 ? 'disabled' : ''}>First</button>
+                        <button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>Previous</button>
+                        <span>Page ${currentPage} of ${totalPages}</span>
+                        <button onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Next</button>
+                        <button onclick="changePage(${totalPages})" ${currentPage === totalPages ? 'disabled' : ''}>Last</button>
+                    `;
+                }
+
+                paginationDiv.innerHTML = paginationHtml;
+            }
+
+            window.changePage = function(page) {
+                currentPage = page;
+                loadObituaries(page);
+            }
+
+            window.viewObituary = function(id) {
+                window.location.href = `/obituary/${id}`;
+            }
+
+            window.shareObituary = function(id, name) {
+                const url = `${window.location.origin}/obituary/${id}`;
+                const title = `In Memory of ${name}`;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: title,
+                        text: `View the obituary of ${name}`,
+                        url: url
+                    }).catch(console.error);
+                } else {
+                    const shareDialog = document.createElement('div');
+                    shareDialog.className = 'share-dialog';
+                    shareDialog.innerHTML = `
+                        <div class="share-dialog-content">
+                            <h3>Share Obituary</h3>
+                            <button onclick="shareToFacebook('${url}', '${title}')" class="facebook-btn">
+                                Share on Facebook
+                            </button>
+                            <button onclick="shareToTwitter('${url}', '${title}')" class="twitter-btn">
+                                Share on Twitter
+                            </button>
+                            <button onclick="shareToLinkedIn('${url}')" class="linkedin-btn">
+                                Share on LinkedIn
+                            </button>
+                            <button onclick="copyLink('${url}')" class="copy-btn">
+                                Copy Link
+                            </button>
+                            <button onclick="closeShareDialog(this)" class="close-btn">
+                                Close
+                            </button>
+                        </div>
+                    `;
+                    document.body.appendChild(shareDialog);
+                }
+            }
+
+            window.closeShareDialog = function(button) {
+                button.closest('.share-dialog').remove();
+            }
+
+            window.shareToFacebook = function(url, title) {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+            }
+
+            window.shareToTwitter = function(url, title) {
+                window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`, '_blank');
+            }
+
+            window.shareToLinkedIn = function(url) {
+                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+            }
+
+            window.copyLink = function(url) {
+                navigator.clipboard.writeText(url)
+                    .then(() => alert('Link copied to clipboard!'))
+                    .catch(console.error);
+            }
+
+            function escapeHtml(unsafe) {
+                return unsafe
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+
+            loadObituaries();
+        });
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "CollectionPage",
+            "name": "Obituaries List",
+            "description": "Browse and share obituaries of loved ones",
+            "url": "https://yourwebsite.com/obituaries"
+        }
+    </script>
+</body>
+</html>

@@ -7,7 +7,7 @@ This project was developed as part of the Continuous Assessment Test (CAT 2) for
 A web-based platform for creating, managing, and sharing obituaries. This platform allows users to honor and remember their loved ones through digital memorials.
 
 ## Course Details
-- **Course**: Internet Programming
+- **Course**: Internet Programming II
 - **Assessment**: CAT 2
 - **Student Name**: Timothy Morandi
 - **Student ID**: ********
